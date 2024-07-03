@@ -1,28 +1,32 @@
-add_library(
-  base-lib
+my_add_library(
+  NAME base-lib
+  VERSION 42
+  PUBLIC_HEADERS
 
-  # public headers
-  include/public/hysteresis.h
-  include/public/sensor-avg.h
-  include/public/sensor-const.h
-  include/public/sensor.h
-  include/public/sensor-random.h
-  include/public/sensor-w1.h
-  include/public/switch.h
-  include/public/sysfs-switch.h
+    hysteresis.h
+    sensor-avg.h
+    sensor-const.h
+    sensor.h
+    sensor-random.h
+    sensor-w1.h
+    switch.h
+    sysfs-switch.h
 
-  # private
-  include/private/file-util.h
+  PUBLIC_HEADERS_DESTINATION
 
-  # sources
-  src/hysteresis.cpp
-  src/sensor-avg.cpp
-  src/sensor-const.cpp
-  src/sensor-random.cpp
-  src/sensor-w1.cpp
-  src/sysfs-switch.cpp
-  src/file-util.cpp
+    ${GLUEHWEIN_INSTALL_DIR}
+
+  PRIVATE_HEADERS
+
+    file-util.h 
+
+  SOURCES
+
+    hysteresis.cpp
+    sensor-avg.cpp
+    sensor-const.cpp
+    sensor-random.cpp
+    sensor-w1.cpp
+    sysfs-switch.cpp
+    file-util.cpp
 )
-target_include_directories(base-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/public)
-target_include_directories(base-lib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/private)
-
