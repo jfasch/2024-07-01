@@ -1,3 +1,5 @@
+#include <project-config.h>
+
 #include <boiling-pot.h>
 #include <sensor-w1.h>
 #include <sysfs-switch.h>
@@ -18,7 +20,8 @@ public:
 
 int main(int argc, char** argv)
 {
-    std::cout << argc << std::endl;
+    std::cerr << "Version: " << GLUEHWEIN_MAJOR << '.' << GLUEHWEIN_MINOR << std::endl;
+
     if (argc != 2 && argc != 3) {
         std::cerr << "Usage: " << argv[0] << " TEMPERATURE-FILE [GPIO-NUMBER]\n";
         std::cerr << "    TEMPERATURE-FILE   contains temperature in milli-celsius\n";

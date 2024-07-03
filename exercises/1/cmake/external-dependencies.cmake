@@ -1,0 +1,13 @@
+find_package(SQLite3)
+if (SQLite3_FOUND)
+  set(C_MACRO_HAVE_SINK_SQLITE3 1)
+else()
+  set(C_MACRO_HAVE_SINK_SQLITE3 0)
+endif()
+
+find_package(Mosquitto)
+if (Mosquitto_FOUND)
+  set(C_MACRO_HAVE_SINK_MQTT 1)
+else()
+  set(C_MACRO_HAVE_SINK_MQTT 0)
+endif()

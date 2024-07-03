@@ -1,8 +1,14 @@
+#include <project-config.h>
+
 #include <sensor-const.h>
 #include <sensor-random.h>
+#include <sink-composite.h>
 #include <sink-terminal.h>
-#ifdef HAVE_SQLITE3
+#ifdef HAVE_SINK_SQLITE3
 #  include <sink-sqlite3.h>
+#endif
+#if HAVE_SINK_MQTT==1
+#  include <sink-mqtt.h>
 #endif
 #include <data-logger.h>
 
@@ -12,7 +18,9 @@
 
 int main(int argc, char** argv)
 {
-#   ifdef HAVE_SQLITE3
+    std::cerr << "Version: " << GLUEHWEIN_MAJOR << '.' << GLUEHWEIN_MINOR << std::endl;
+
+#   ifdef HAVE_SINK_SQLITE3
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <SQLITE3-DB-FILE>" << '\n';
         std::cerr << "    " << SinkSQLite3::create_table_statement << '\n';
@@ -31,12 +39,17 @@ int main(int argc, char** argv)
     config.add_sensor("br", std::move(bottom_right));
     config.add_sensor("tl", std::move(top_left));
     config.add_sensor("tr", std::move(top_right));
+
+    auto sink = std::make_unique<SinkComposite>();
     
-#   ifdef HAVE_SQLITE3
-    auto sink = std::make_unique<SinkSQLite3>(dbfile);
-#   else
-    auto sink = std::make_unique<SinkTerminal>();
+    sink->add_sink(std::make_unique<SinkTerminal>());
+#   ifdef HAVE_SINK_SQLITE3
+    sink->add_sink(std::make_unique<SinkSQLite3>(dbfile));
 #   endif
+#   ifdef HAVE_SINK_MQTT
+    sink->add_sink(std::make_unique<SinkMQTT>("localhost", 1883, "gluehwein"));
+#   endif
+
     DataLogger logger(config, std::move(sink), 1000/*ms*/);
     logger.start_logging();
 

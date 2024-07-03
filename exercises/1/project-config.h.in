@@ -1,0 +1,8 @@
+#pragma once
+
+#define GLUEHWEIN_MAJOR @gluehwein_VERSION_MAJOR@
+#define GLUEHWEIN_MINOR @gluehwein_VERSION_MINOR@
+
+// flags for external dependencies
+#define HAVE_SINK_SQLITE3 @C_MACRO_HAVE_SINK_SQLITE3@
+#define HAVE_SINK_MQTT @C_MACRO_HAVE_SINK_MQTT@

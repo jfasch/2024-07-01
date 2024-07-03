@@ -1,17 +1,13 @@
 cmake_minimum_required(VERSION 3.20)
-project(gluehwein)
+project(gluehwein VERSION 42.666)
 
-include(my_add_library.cmake)
-set(GLUEHWEIN_INSTALL_DIR gluehwein)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+include(my_add_library)
+include(settings)
+include(external-dependencies)
 
-if (${CMAKE_C_COMPILER_ID} STREQUAL GNU)
-  string(APPEND CMAKE_C_FLAGS " -Wall -Werror")
-  string(APPEND CMAKE_CXX_FLAGS " -Wall -Werror")
-endif()
-
-cmake_policy(SET CMP0139 NEW)   # for example
-
-find_package(SQLite3)
+configure_file(project-config.h.in ${CMAKE_BINARY_DIR}/project-config.h)
+include_directories(${CMAKE_BINARY_DIR})
 
 add_subdirectory(firmware)
 add_subdirectory(toolcase)
