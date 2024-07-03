@@ -6,8 +6,12 @@ include(my_add_library)
 include(settings)
 include(external-dependencies)
 
+enable_testing()
+
 configure_file(project-config.h.in ${CMAKE_BINARY_DIR}/project-config.h)
 include_directories(${CMAKE_BINARY_DIR})
 
 add_subdirectory(firmware)
 add_subdirectory(toolcase)
+add_subdirectory(tests)
+add_subdirectory(googletest)
