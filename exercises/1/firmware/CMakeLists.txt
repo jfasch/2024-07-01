@@ -79,4 +79,23 @@ add_custom_command(
 
   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/2024-07-03.conf
 	  ${CMAKE_CURRENT_SOURCE_DIR}/config-generator.py
-)  
+)
+
+
+
+
+# sollte man nicht machen
+# execute_process(
+#   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/config-generator.py
+#           ${CMAKE_CURRENT_SOURCE_DIR}/2024-07-03.conf
+# 	  ${CMAKE_CURRENT_BINARY_DIR}/2024-07-03-do-not-use.cpp
+# )
+# 
+# add_executable(
+#   data-logger-deeply-embedded-2024-07-03-do-not-use
+# 
+#   data-logger-deeply-embedded.cpp
+#   ${CMAKE_CURRENT_BINARY_DIR}/2024-07-03-do-not-use.cpp
+# )
+# target_include_directories(data-logger-deeply-embedded-2024-07-03-do-not-use PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+# target_link_libraries(data-logger-deeply-embedded-2024-07-03-do-not-use data-logger-lib base-lib)
